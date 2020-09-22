@@ -21,6 +21,9 @@ public class Downloader {
                 try {
                     BufferedImage img = ImageIO.read(new URL(url));
                     String filename = url.split("/")[url.split("/").length - 1];
+                    if (filename.length() > 7) {
+                        filename = filename.substring(filename.length() - 10);
+                    }
                     File file = new File(folder + "/" + filename);
 
                     if (!file.exists()) {
