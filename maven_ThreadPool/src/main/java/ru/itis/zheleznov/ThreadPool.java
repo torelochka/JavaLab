@@ -1,16 +1,16 @@
-package ru.itis.zheleznov.utils;
+package ru.itis.zheleznov;
 
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ThreadPool {
-
-
+    
     private Deque<Runnable> tasks;
 
     private ThreadWorker[] pool;
 
     public ThreadPool(int threadsCount) {
+
         tasks = new ConcurrentLinkedDeque<>();
         pool = new ThreadWorker[threadsCount];
 
