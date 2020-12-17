@@ -8,7 +8,8 @@ public class MainForServer {
     public static void main(String[] argv) {
         Args args = new Args();
         JCommander.newBuilder().addObject(args).build().parse(argv);
-        Server server = new Server(args.port);
+        int port = 4242;
+        Server server = new Server(port);
         server.start();
     }
 }

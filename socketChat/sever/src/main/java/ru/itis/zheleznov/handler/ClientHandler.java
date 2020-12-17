@@ -30,11 +30,10 @@ public class ClientHandler extends Thread {
         while(true) {
             try {
                 String msg = dataInputStream.readUTF();
-                broadcast(msg);
+                server.broadcast(msg, this);
                 System.out.println("Server: " + msg);
 
             } catch (IOException e) {
-                e.printStackTrace();
                 isOnline = false;
                 break;
             }
@@ -47,10 +46,6 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    public void broadcast(String msg) {
-        server.broadcast(msg, this);
     }
 
     public boolean isOnline() {

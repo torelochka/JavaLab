@@ -12,6 +12,7 @@ public class Server extends Thread {
 
     private final int port;
     private final ServerSocket serverSocket;
+    //TODO потокобезопасный список
     private final List<ClientHandler> clients;
 
     public Server(int port) {
