@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <img src="/resources/assets/main/header.png" class="img-fluid" alt="header image">
+                            <img src="/views/assets/main/header.png" class="img-fluid" alt="header image">
                         </div>
                     </div>
                 </div>
@@ -93,12 +93,12 @@
                 </div>
                 <div class="row stages-cont_img">
                     <div class="offset-1 col-md-2">
-                        <div class="row justify-content-center"><img src="/resources/assets/main/1.png" alt="advantages">
+                        <div class="row justify-content-center"><img src="/views/assets/main/1.png" alt="advantages">
                         </div>
                         <div class="row stages-cont_text center"><h6>1. Ваше обращение <span> ко мне </span></h6></div>
                     </div>
                     <div class="offset-2 col-md-2">
-                        <div class="row justify-content-center"><img src="/resources/assets/main/3.png" alt="advantages">
+                        <div class="row justify-content-center"><img src="/views/assets/main/3.png" alt="advantages">
                         </div>
                         <div class="row stages-cont_text center"><h6>3. Заключение договора
                                 <span> с последующей оплатой</span>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="offset-2 col-md-2 text-center">
-                        <div class="row  justify-content-center"><img src="/resources/assets/main/5.png" alt="advantages">
+                        <div class="row  justify-content-center"><img src="/views/assets/main/5.png" alt="advantages">
                         </div>
                         <div class="row stages-cont_text center"><h6> 5. Оплата любым удобным
                                 <span>для вас способом</span>
@@ -120,14 +120,14 @@
 
                 <div class="row stages-cont_img">
                     <div class="offset-3 col-md-2">
-                        <div class="row justify-content-center"><img src="/resources/assets/main/2.png" alt="advantages">
+                        <div class="row justify-content-center"><img src="/views/assets/main/2.png" alt="advantages">
                         </div>
                         <div class="row stages-cont_text center"><h6>2. Выезд по указанному адресу или приезд <span>ко мне в
                     офис</span></h6>
                         </div>
                     </div>
                     <div class="offset-2 col-md-2">
-                        <div class="row justify-content-center"><img src="/resources/assets/main/4.png" alt="advantages">
+                        <div class="row justify-content-center"><img src="/views/assets/main/4.png" alt="advantages">
                         </div>
                         <div class="row stages-cont_text center"><h6><span> 4. Организация и контроль</span> всего
                                 процесса
@@ -145,16 +145,15 @@
                     <h2>Чем я могу Вам помочь ?</h2>
                 </div>
                 <div class="row cards">
-                    <#if categories??>
-                        <#list categories as category>
-                            <div class="col-md-4 center">
-                                <img src="/resources/assets/main/${category.getImage()}" alt="category">
-                                <a href="/services">
-                                    <div class="text-services">${category.getName()}</div>
-                                </a>
-                            </div>
-                        </#list>
-                    </#if>
+                    <#list categories as category>
+                        <div class="col-md-4 center">
+                            <img src="/views/assets/main/${category.getImage()}" alt="category">
+                            <a href="/services">
+                                <div class="text-services">${category.getName()}</div>
+                            </a>
+                        </div>
+                    </#list>
+
                 </div>
 
             </div>
@@ -172,14 +171,14 @@
                 <div class="container">
                     <div class="row auth-cont_title center">
                         <div class="offset-1 col-md-4">
-                            <a href="/signIn"><h2>Авторизация</h2></a>
+                            <a href="/auth"><h2>Авторизация</h2></a>
                         </div>
                         <div class="offset-2 col-md-3">
-                            <a href="/signUp"><h2>Регистрация</h2></a>
+                            <a href="/register"><h2>Регистрация</h2></a>
                         </div>
                     </div>
 
-                    <form class="form-signin" action="/signIn" method="post">
+                    <form class="form-signin" action="/auth" method="post">
                         <div class="row cards">
                             <div class="card border-white offset-3 col-md-6" style="border-radius: 20px">
                                 <div class="card-body center">

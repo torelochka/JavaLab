@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
-    private String name;
-    private String image;
+public class SignInForm {
+    private String email;
+    private String password;
+    private Boolean rememberMe;
 }

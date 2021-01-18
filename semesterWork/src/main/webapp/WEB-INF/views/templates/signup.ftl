@@ -18,7 +18,7 @@
                 </div>
             </#if>
 
-            <form class="form-signin" method="post" action="/signUp" autocomplete="off">
+            <form class="form-signin" method="post" action="/register" autocomplete="off">
                 <div class="row cards">
                     <div class="card border-white offset-3 col-md-6 card_settings">
                         <div class="card-body text-center ">
@@ -53,7 +53,7 @@
                             <div class="register-cont_input_bottom">
                                 <label for="repeatPassword"></label>
                                 <input type="password" id="repeatPassword" class="form-control register-cont_input"
-                                       placeholder="Повторите пароль" required name="passwordAgain"
+                                       placeholder="Повторите пароль" required name="password_again"
                                        pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$"
                                        title="Этот пароль очень легко расколдовать! Чего-то не хватает...">
                             </div>

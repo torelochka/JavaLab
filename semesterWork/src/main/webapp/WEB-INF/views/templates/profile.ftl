@@ -1,6 +1,6 @@
 <#ftl encoding="UTF-8"/>
 <#import "layouts/base.ftl" as base>
-<@base.main title="Личный кабинет">
+<@base.main css=["profile.css"] scripts=["modalWindow.js"] title="Личный кабинет">
     <div class="content">
         <div class="container">
             <div class="row">
@@ -30,7 +30,7 @@
                     <div class="row info-cont">
                         <div class="col-md-3">
                             <a style="width: 40%" target="_blank">
-                                <img class="profile_avatar" src="/resources/assets/user/profile.png"
+                                <img class="profile_avatar" src="${user.getImage()}"
                                      alt="avatar">
                             </a>
                         </div>
@@ -120,5 +120,7 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </@base.main>

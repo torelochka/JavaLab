@@ -1,9 +1,15 @@
 package ru.itis.zheleznov.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import java.io.InputStream;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
 
@@ -11,9 +17,15 @@ public class User {
     private String name;
     private String lastname;
     private String email;
-    private String hashPassword;
+    private String passwordHash;
+    private InputStream profileImg;
     @Builder.Default
     private Right rights = Right.USER;
+    @Builder.Default
+    private String image = "/views/assets/user/profile.png";
+    /*public String getMesImage() {
+        return FileToImage.toImage(profileImg);
+    }*/
 
     public enum Right {
         ADMIN("ADMIN"),
@@ -31,4 +43,3 @@ public class User {
         }
     }
 }
-
