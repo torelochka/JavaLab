@@ -10,6 +10,10 @@
     left: 850px;
 }
 
+.autocomplete-items {
+    cursor: pointer;
+}
+
 .div_back_left {
     position: absolute;
     z-index: 0;

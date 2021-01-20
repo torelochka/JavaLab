@@ -19,7 +19,6 @@ public class SignInServiceJdbsImpl implements SignInService {
     @Override
     public boolean authenticate(SignInForm form) {
         Optional<User> userOptional = userService.getUserByEmail(form.getEmail());
-
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return passwordEncoder.matches(form.getPassword(), user.getPasswordHash());

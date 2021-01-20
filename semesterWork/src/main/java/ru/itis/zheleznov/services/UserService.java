@@ -1,11 +1,12 @@
 package ru.itis.zheleznov.services;
 
+import ru.itis.zheleznov.models.SignUpForm;
 import ru.itis.zheleznov.models.User;
 
 import java.util.Optional;
 
 public interface UserService {
-    void addUser(User user);
+    void addUser(SignUpForm form);
 
     void updateUser(User user);
 
@@ -13,5 +14,5 @@ public interface UserService {
 
     Optional<User> getUserByEmail(String email);
 
-    User getUserById(int id);
+    User getUserById(long id);
 }

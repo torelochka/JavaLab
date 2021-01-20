@@ -1,17 +1,18 @@
 $("#search_form").submit(function (event) {
     event.preventDefault();
+    let json = {
+        'input': $("#inputSearch").val(),
+        'filter': $('input[name=filter]:checked').val()
+    }
     $.ajax({
         url: "/search",
-        type: "GET",
-        data: {
-            'input': $("#inputSearch").val(),
-            'filter': $('input[name=filter]:checked').val()
-        },
+        type: "POST",
+        contentType: "application/json;charset=UTF-8",
+        data: JSON.stringify(json),
         dataType: "json",
         success: function (data) {
-            let result = data['result'];
             $('#results').html('');
-            result.forEach(function (product) {
+            data.forEach(function (product) {
                 $('#results').append($(
                     '<div class="col-md-4">' +
                     '<div class="card services_card">' +
@@ -28,7 +29,7 @@ $("#search_form").submit(function (event) {
                     '<div class="btn_pad">' +
                     '<button class="btn services_btn"' +
                     ' onclick="d(' + product['id'] + ')">' +
-                    'Воспользоваться' +
+                    'Get !' +
                     '</button>' +
                     '</div>' +
                     '</div>' +

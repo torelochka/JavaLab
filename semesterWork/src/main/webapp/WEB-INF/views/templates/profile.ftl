@@ -111,16 +111,7 @@
                         </#list>
                     </#if>
                 </div>
-
-                <div class="row history-cont_btn">
-                    <button class="offset-2 col-md-8 btn" type="submit" onclick="location.href='/chat'">
-                        Написать
-                        бабушке
-                    </button>
-                </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 </@base.main>

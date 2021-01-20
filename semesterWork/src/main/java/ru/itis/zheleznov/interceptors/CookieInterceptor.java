@@ -1,53 +1,36 @@
-/*
 package ru.itis.zheleznov.interceptors;
 
 import org.springframework.web.servlet.HandlerInterceptor;
+import ru.itis.zheleznov.models.User;
+import ru.itis.zheleznov.services.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class CookieInterceptor implements HandlerInterceptor {
 
+    private final UserService userService;
+
+    public CookieInterceptor(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-
-        UsersService usersService = (UsersService) req.getServletContext().getAttribute("userService");
-
-        BasketService basketService = (BasketService) req.getServletContext().getAttribute("basketService");
-
-        User user = (User) req.getSession().getAttribute("user");
-
-        if (user != null) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            setBasket(user, basketService, req);
-            return;
-        }
-
-        String email = "";
-        String password = "";
-
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("email")) {
-                email = cookie.getValue();
-            } else if (cookie.getName().equals("password")) {
-                password = cookie.getValue();
-            }
-        }
-        if (!email.equals("") && !password.equals("")) {
-            user = usersService.getUserByEmailPassword(email, password);
-            if (user != null) {
-                if (user.getProfileImg() != null) {
-                    user.setImage(FileToImage.toImage(user.getProfileImg()));
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            Boolean authenticated = (Boolean) session.getAttribute("authenticated");
+            if (authenticated != null && authenticated) {
+                User user = (User) session.getAttribute("user");
+                Long id = (Long) session.getAttribute("id");
+                if (user == null && id != null) {
+                    session.setAttribute("user", userService.getUserById(id));
                 }
-                req.getSession().setAttribute("user", user);
-                setBasket(user, basketService, req);
-            } else {
-                CookieActions.deleteCookies(req, resp, "email", "password");
             }
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        return true;
     }
 }
-*/
+

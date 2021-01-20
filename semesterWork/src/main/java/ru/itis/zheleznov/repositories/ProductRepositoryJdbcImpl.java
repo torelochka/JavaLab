@@ -55,16 +55,20 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
 
     @Override
     public List<Product> getProductsByName(String name) {
-        return template.query(SQL_FIND_BY_NAME, productRowMapper, name);
+        return template.query(SQL_FIND_BY_NAME, productRowMapper, searchRequest(name));
     }
 
     @Override
     public List<Product> getProductsByNameOrderByPrice(String name) {
-        return template.query(SQL_FIND_BY_NAME_ORDER_BY_PRICE, productRowMapper, name);
+        return template.query(SQL_FIND_BY_NAME_ORDER_BY_PRICE, productRowMapper, searchRequest(name));
     }
 
     @Override
     public List<Product> getProductsByNameOrderByPopular(String name) {
-        return template.query(SQL_FIND_BY_NAME_ORDER_BY_POPULARITY, productRowMapper, name);
+        return template.query(SQL_FIND_BY_NAME_ORDER_BY_POPULARITY, productRowMapper, searchRequest(name));
+    }
+
+    private String searchRequest(String name) {
+        return "%" + name + "%";
     }
 }

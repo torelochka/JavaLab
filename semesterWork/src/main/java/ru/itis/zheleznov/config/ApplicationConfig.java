@@ -15,10 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import ru.itis.zheleznov.repositories.*;
-import ru.itis.zheleznov.services.SignInService;
-import ru.itis.zheleznov.services.SignInServiceJdbsImpl;
-import ru.itis.zheleznov.services.UserService;
-import ru.itis.zheleznov.services.UserServiceJdbcImpl;
+import ru.itis.zheleznov.services.*;
 
 import javax.sql.DataSource;
 
@@ -30,6 +27,9 @@ public class ApplicationConfig {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public ProductService productService() { return new ProductServiceJdbcImpl(productRepository()); }
 
     @Bean
     public UserRepository userRepository() {
@@ -49,7 +49,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserService userService() {
-        return new UserServiceJdbcImpl(userRepository());
+        return new UserServiceJdbcImpl(userRepository(), passwordEncoder());
     }
 
     @Bean

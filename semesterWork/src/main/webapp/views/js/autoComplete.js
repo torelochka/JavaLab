@@ -1,6 +1,7 @@
 $.ajax({
     url: "/service",
     type: "GET",
+    contentType: "application/json",
     dataType: "json",
     success: function (data) {
         autocomplete(document.getElementById("inputSearch"), data);

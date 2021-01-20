@@ -13,18 +13,15 @@ public class CsrfInterceptor implements HandlerInterceptor {
         if (request.getMethod().equals("POST")) {
             String requestCsrf = request.getParameter("_csrf_token");
             String sessionCsrf = (String) request.getSession(false).getAttribute("_csrf_token");
-            if (sessionCsrf.equals(requestCsrf)) {
-                return true;
-            } else {
-                ResponseUtil.sendForbidden(request, response);
-                return true;
+            if (!sessionCsrf.equals(requestCsrf)) {
+                response.sendRedirect("/signIn");
             }
-        }
-        if (request.getMethod().equals("GET")) {
+            return true;
+        } else {
             String csrf = UUID.randomUUID().toString();
             request.setAttribute("_csrf_token", csrf);
             request.getSession().setAttribute("_csrf_token", csrf);
+            return true;
         }
-        return true;
     }
 }

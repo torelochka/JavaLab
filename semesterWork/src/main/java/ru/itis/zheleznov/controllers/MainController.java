@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.itis.zheleznov.repositories.CategoryRepository;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class MainController {
 
@@ -16,7 +18,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String main(Model model) {
+    public String main(Model model, HttpServletRequest req) {
         model.addAttribute("categories", categoryRepository.getAll());
         return "main";
     }
