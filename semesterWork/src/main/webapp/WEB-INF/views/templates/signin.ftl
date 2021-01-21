@@ -32,15 +32,6 @@
                                 <input type="password" id="inputPassword" class="form-control register-cont_input"
                                        placeholder="Пароль" required name="password">
                             </div>
-
-                            <div class="auth-checkbox">
-                                <div class="checkbox mb-3">
-                                    <label class="checkbox_text">
-                                        <input type="radio" value="false" name="remember" checked hidden>
-                                        <input type="radio" value="true" name="remember"> запомнить меня
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

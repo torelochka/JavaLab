@@ -29,37 +29,9 @@ public class ApplicationConfig {
     private Environment environment;
 
     @Bean
-    public ProductService productService() { return new ProductServiceJdbcImpl(productRepository()); }
-
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepositoryJdbcImpl(jdbcTemplate());
-    }
-
-    @Bean
-    ProductRepository productRepository() { return new ProductRepositoryJdbcImpl(jdbcTemplate()); }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public SignInService signInService() { return new SignInServiceJdbsImpl(userService(), passwordEncoder()); }
-
-    @Bean
-    public UserService userService() {
-        return new UserServiceJdbcImpl(userRepository(), passwordEncoder());
-    }
-
-    @Bean
-    BasketRepository basketRepository() { return new BasketRepositoryJdbcImpl(jdbcTemplate(), userRepository()); }
-
-    @Bean
-    PurchaseRepository purchaseRepository() { return new PurchaseRepositoryJdbcImpl(jdbcTemplate(), productRepository(), basketRepository()); }
-
-    @Bean
-    CategoryRepository categoryRepository() { return new CategoryRepositoryJdbcImpl(jdbcTemplate()); }
 
     @Bean
     public JdbcTemplate jdbcTemplate() {

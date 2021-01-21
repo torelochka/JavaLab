@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public class UserRepositoryJdbcImpl implements UserRepository {
 
-    private JdbcTemplate template;
+    private final JdbcTemplate template;
 
     //language=SQL
     private static final String SQL_SAVE = "INSERT INTO users (name, email, lastname, hash_password, rights)" +
@@ -24,12 +24,6 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
     //language=SQL
     private final String SQL_FIND_EMAIL = "SELECT * FROM users where email=?";
-
-    //language=SQL
-    private final String SQL_FIND_EMAIL_PASSWORD = "SELECT * FROM users where email=? and hash_password=?";
-
-    //language=SQL
-    private final String SQL_FIND_ALL = "SELECT * FROM users";
 
     public UserRepositoryJdbcImpl(JdbcTemplate template) {
         this.template = template;
@@ -50,11 +44,6 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByEmailPassword(String email, String password) {
-        return Optional.ofNullable(template.queryForObject(SQL_FIND_EMAIL_PASSWORD, userRowMapper, email, password));
-    }
-
-    @Override
     public Optional<User> findByEmail(String email) {
         try {
             return Optional.ofNullable(template.queryForObject(SQL_FIND_EMAIL, userRowMapper, email));
@@ -66,10 +55,5 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     @Override
     public Optional<User> findById(long id) {
         return Optional.ofNullable(template.queryForObject(SQL_FIND_ID, userRowMapper, id));
-    }
-
-    @Override
-    public List<User> findAll() {
-        return template.query(SQL_FIND_ALL, userRowMapper);
     }
 }

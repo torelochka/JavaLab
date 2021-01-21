@@ -1,9 +1,11 @@
 package ru.itis.zheleznov.repositories;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 import ru.itis.zheleznov.models.Category;
 import ru.itis.zheleznov.models.Product;
 
+@Component
 public class ProductRowMapper {
 
     public static RowMapper<Product> productRowMapper = (row, i) -> Product.builder()

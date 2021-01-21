@@ -1,5 +1,6 @@
 package ru.itis.zheleznov.repositories;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -52,7 +53,11 @@ public class BasketRepositoryJdbcImpl implements BasketRepository {
 
     @Override
     public Optional<Basket> getUserBasket(User user) {
-        return Optional.ofNullable(template.queryForObject(SQL_FIND_BY_USER_ID, basketRowMapper, user.getId()));
+        try {
+            return Optional.ofNullable(template.queryForObject(SQL_FIND_BY_USER_ID, basketRowMapper, user.getId()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

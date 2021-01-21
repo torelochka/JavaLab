@@ -75,8 +75,8 @@
                     </div>
                 </div>
                 <div class="container offset-1">
-                    <#if purchase??>
-                        <#list purchase as purch>
+                    <#if purchases??>
+                        <#list purchases as purch>
                             <div class="row history-cont_cards">
                                 <div class="card" style="border-radius: 20px; width: 90%">
                                     <div class="card-body ">

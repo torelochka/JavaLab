@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import ru.itis.zheleznov.interceptors.CookieInterceptor;
 import ru.itis.zheleznov.interceptors.CsrfInterceptor;
 import ru.itis.zheleznov.interceptors.SecurityInterceptor;
+import ru.itis.zheleznov.services.BasketService;
 import ru.itis.zheleznov.services.UserService;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import java.util.ArrayList;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private UserService userService;
+    private final UserService userService;
+    private final BasketService basketService;
 
-    public WebMvcConfig(UserService userService) {
+    public WebMvcConfig(UserService userService, BasketService basketService) {
         this.userService = userService;
+        this.basketService = basketService;
     }
 
     @Override
@@ -32,8 +35,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/profile", "/basket", "/services");
-        registry.addInterceptor(new CookieInterceptor(userService));
+        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/profile", "/basket", "/services", "/basketService", "/purchase");
+        registry.addInterceptor(new CookieInterceptor(userService, basketService));
         //registry.addInterceptor(new CsrfInterceptor()).addPathPatterns("/main", "/signIn", "/signUp");
     }
 }

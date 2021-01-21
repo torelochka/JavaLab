@@ -58,7 +58,7 @@
             <#if user??>
             alert('Услуга добавлена в корзину! Уже начинаю колдовать!');
             </#if>
-            window.location.href = '/basketService?add=' + id;
+            window.location.href = '/basketService/add/' + id;
         }
     </script>
 </@base.main>

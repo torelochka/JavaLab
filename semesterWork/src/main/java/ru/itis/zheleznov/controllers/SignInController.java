@@ -1,6 +1,7 @@
 package ru.itis.zheleznov.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,15 +25,11 @@ public class SignInController {
     }
 
     @GetMapping("/signIn")
-    public String signInPage() {
-            return "signin";
-    }
+    public String signInPage() { return "signin"; }
 
     @PostMapping("/signIn")
-    public String signIn(SignInForm form, @RequestParam("remember") String remember, HttpServletRequest request) {
-        form.setRememberMe(Boolean.getBoolean(remember));
+    public String signIn(SignInForm form, HttpServletRequest request) {
         if (signInService.authenticate(form)) {
-            // сохранять в куки?
             Optional<User> user = userService.getUserByEmail(form.getEmail());
             if (user.isPresent()) {
                 request.getSession().setAttribute("id", user.get().getId());

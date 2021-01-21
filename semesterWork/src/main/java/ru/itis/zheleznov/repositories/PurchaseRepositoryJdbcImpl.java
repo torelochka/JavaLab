@@ -41,7 +41,7 @@ public class PurchaseRepositoryJdbcImpl implements PurchaseRepository {
     @Override
     public void save(Purchase entity) {
         template.update(SQL_SAVE, entity.getBasketId(), entity.getCustomer().getId());
-        Optional<Purchase> purchase = Optional.ofNullable(template.queryForObject(SQL_FIND_ID, purchaseRowMapper, entity.getBasketId()));
+        Optional<Purchase> purchase = Optional.ofNullable(template.query(SQL_FIND_ID, purchaseRowMapper, entity.getBasketId()).get(0));
         if (purchase.isPresent()) {
             for (Product product : entity.getProducts()) {
                 product.setPopularity(product.getPopularity() + 1);

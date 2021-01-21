@@ -2,10 +2,13 @@ package ru.itis.zheleznov.repositories;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.itis.zheleznov.models.Category;
 
 import java.util.List;
 
+@Repository
 public class CategoryRepositoryJdbcImpl implements CategoryRepository {
 
     private final JdbcTemplate template;

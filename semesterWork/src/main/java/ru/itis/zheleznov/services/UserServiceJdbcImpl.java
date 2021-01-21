@@ -31,13 +31,8 @@ public class UserServiceJdbcImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-
-    }
-
-    @Override
     public boolean userIsExist(String email) {
-        return false;
+        return userRepository.findByEmail(email).isPresent();
     }
 
     @Override

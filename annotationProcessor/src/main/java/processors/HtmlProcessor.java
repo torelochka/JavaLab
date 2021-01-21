@@ -35,7 +35,7 @@ public class HtmlProcessor extends AbstractProcessor {
         configuration.setClassForTemplateLoading(HtmlProcessor.class, "/");
         configuration.setDefaultEncoding("UTF-8");
 
-        for (Element element : annotatedElements) {//TODO решить вопрос с логирование
+        for (Element element : annotatedElements) {
             Map<String, Object> root = new HashMap<>();
             Form form = new Form();
             root.put("form", form);

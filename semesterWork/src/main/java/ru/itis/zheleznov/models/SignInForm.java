@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class SignInForm {
     private String email;
     private String password;
-    private Boolean rememberMe;
 }
