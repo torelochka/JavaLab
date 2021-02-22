@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -18,15 +20,48 @@ import ru.itis.zheleznov.repositories.*;
 import ru.itis.zheleznov.services.*;
 
 import javax.sql.DataSource;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 @EnableWebMvc
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:app.properties")
 @ComponentScan("ru.itis.zheleznov")
 public class ApplicationConfig {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(environment.getProperty("spring.mail.host"));
+        mailSender.setPort(Integer.parseInt(environment.getProperty("spring.mail.port")));
+
+        mailSender.setDefaultEncoding("UTF-8");
+
+        mailSender.setUsername(environment.getProperty("spring.mail.username"));
+        mailSender.setPassword(environment.getProperty("spring.mail.password"));
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", environment.getProperty("spring.mail.properties.transport.protocol"));
+        props.put("mail.smtp.auth", environment.getProperty("spring.mail.properties.mail.smtp.auth"));
+        props.put("mail.smtp.starttls.enable", environment.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
+        props.put("mail.debug", environment.getProperty("spring.mail.properties.mail.debug"));
+
+        return mailSender;
+    }
+
+    @Bean
+    public freemarker.template.Configuration configuration() {
+        return freeMarkerConfigurer().getConfiguration();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

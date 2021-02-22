@@ -55,6 +55,11 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public freemarker.template.Configuration configuration() {
+        return freeMarkerConfigurer().getConfiguration();
+    }
+
+    @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
@@ -82,11 +87,6 @@ public class ApplicationConfig {
         resolver.setSuffix(".ftl");
         resolver.setContentType("text/html;charset=UTF-8");
         return resolver;
-    }
-
-    @Bean
-    public freemarker.template.Configuration configuration() {
-        return freeMarkerConfigurer().getConfiguration();
     }
 
     @Bean

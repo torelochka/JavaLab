@@ -9,6 +9,15 @@
     left: 800px;
 }
 
+label {
+    color: black;
+}
+
+.error {
+    color:red;
+    font-style: italic;
+}
+
 .div_back_left {
     position: absolute;
     z-index: 0;

@@ -1,4 +1,5 @@
 <#ftl encoding="UTF-8"/>
+<#import "/spring.ftl" as spring/>
 <#macro main title css=[] scripts=[]>
     <!DOCTYPE html>
     <html lang="ru" xmlns="http://www.w3.org/1999/html">

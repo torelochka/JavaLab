@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.itis.zheleznov.models.User;
 
-import java.io.ByteArrayInputStream;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -39,8 +37,13 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             .build();
 
     @Override
-    public void save(User user) {
-        template.update(SQL_SAVE, user.getName(), user.getEmail(), user.getLastname(), user.getPasswordHash(), user.getRights().getString());
+    public boolean save(User user) {
+        try {
+            template.update(SQL_SAVE, user.getName(), user.getEmail(), user.getLastname(), user.getPasswordHash(), user.getRights().getString());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
