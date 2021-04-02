@@ -2,10 +2,11 @@ package ru.itis.zheleznov.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.itis.zheleznov.models.Email;
-import ru.itis.zheleznov.models.SignUpForm;
+import ru.itis.zheleznov.dto.Email;
+import ru.itis.zheleznov.dto.SignUpForm;
 import ru.itis.zheleznov.models.User;
 import ru.itis.zheleznov.repositories.UserRepository;
 import ru.itis.zheleznov.utils.EmailUtil;
@@ -32,6 +33,7 @@ public class SignUpServiceImpl implements SignUpService {
         this.mailsGenerator = mailsGenerator;
         this.encoder = encoder;
     }
+
     @Value("${server.url}")
     private String serverUrl;
 
@@ -40,23 +42,23 @@ public class SignUpServiceImpl implements SignUpService {
 
 
     @Override
-    public void signUp(SignUpForm form, HttpSession session) {
+    public User signUp(SignUpForm form) {
         User newUser = User.builder()
-                .name(form.getFirstname())
+                .firstname(form.getFirstname())
                 .lastname(form.getLastname())
                 .email(form.getEmail())
                 .confirmedCode(UUID.randomUUID())
                 .passwordHash(encoder.encode(form.getPassword()))
                 .build();
 
-        if (usersRepository.save(newUser)) {
-            System.out.println("true");
-            session.setAttribute("authenticated", true);
+        if (!usersRepository.findByEmail(newUser.getEmail()).isPresent()) {
+            User user = usersRepository.save(newUser);
             String confirmMail = mailsGenerator.getMailForConfirm(serverUrl, newUser.getConfirmedCode().toString());
             Email email = new Email(from, newUser.getEmail(), "Регистрация", confirmMail);
             emailUtil.sendMail(email);
+            return user;
         }
-
+        return null;
     }
 
 }

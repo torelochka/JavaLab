@@ -1,9 +1,10 @@
 package ru.itis.zheleznov.services;
 
-import ru.itis.zheleznov.models.SignUpForm;
+import ru.itis.zheleznov.dto.SignUpForm;
+import ru.itis.zheleznov.models.User;
 
 import javax.servlet.http.HttpSession;
 
 public interface SignUpService {
-    void signUp(SignUpForm form,  HttpSession session);
+    User signUp(SignUpForm form);
 }

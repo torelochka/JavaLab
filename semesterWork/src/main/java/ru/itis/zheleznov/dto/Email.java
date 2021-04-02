@@ -1,4 +1,4 @@
-package ru.itis.zheleznov.models;
+package ru.itis.zheleznov.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

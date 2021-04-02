@@ -2,7 +2,7 @@ package ru.itis.zheleznov.services;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.itis.zheleznov.models.SignInForm;
+import ru.itis.zheleznov.dto.SignInForm;
 import ru.itis.zheleznov.models.User;
 
 import java.util.Optional;

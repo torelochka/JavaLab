@@ -1,13 +1,13 @@
 package ru.itis.zheleznov.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.itis.zheleznov.models.User;
 
 import java.util.Optional;
 
-public interface UserRepository {
-    boolean save(User user);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
-
-    Optional<User> findById(long id);
 }

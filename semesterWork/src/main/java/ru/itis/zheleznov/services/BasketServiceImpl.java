@@ -1,5 +1,6 @@
 package ru.itis.zheleznov.services;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.itis.zheleznov.models.Basket;
 import ru.itis.zheleznov.models.Product;
@@ -7,6 +8,7 @@ import ru.itis.zheleznov.models.User;
 import ru.itis.zheleznov.repositories.BasketRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class BasketServiceImpl implements BasketService {
@@ -18,31 +20,34 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public void createBasket(Basket basket) {
-        basketRepository.save(basket);
+    public Optional<Basket> getUserBasket(User user) {
+        return basketRepository.findByUser(user);
     }
 
     @Override
-    public Basket getUserBasket(User user) {
-        return basketRepository.getUserBasket(user).orElse(null);
+    public Basket addProductInBasket(Basket basket, Product product) {
+        basket.getProducts().add(product);
+        return basketRepository.save(basket);
     }
 
     @Override
-    public void addProductInBasket(Basket basket, Product product) {
-        basketRepository.addProduct(basket, product);
-    }
-
     public Basket createOrGetBasket(User user) {
-        Basket basket = getUserBasket(user);
-        if (basket == null) {
-            basket = Basket.builder().products(new ArrayList<>()).user(user).build();
-            createBasket(basket);
+        Optional<Basket> MaybeBasket = getUserBasket(user);
+        if (!MaybeBasket.isPresent()) {
+            Basket basket = Basket.builder().products(new ArrayList<>()).user(user).build();
+            return save(basket);
         }
-        return basket;
+        return MaybeBasket.get();
     }
 
     @Override
-    public void deleteProductFromBasket(Basket basket, Product product) {
-        basketRepository.deleteProduct(basket, product);
+    public Basket save(Basket basket) {
+        return basketRepository.save(basket);
+    }
+
+    @Override
+    public Basket deleteProductFromBasket(Basket basket, Product product) {
+        basket.getProducts().remove(product);
+        return basketRepository.save(basket);
     }
 }

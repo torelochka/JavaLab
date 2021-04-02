@@ -4,14 +4,16 @@ import ru.itis.zheleznov.models.Basket;
 import ru.itis.zheleznov.models.Product;
 import ru.itis.zheleznov.models.User;
 
+import java.util.Optional;
+
 public interface BasketService {
-    void createBasket(Basket basket);
+    Basket save(Basket basket);
 
     Basket createOrGetBasket(User user);
 
-    Basket getUserBasket(User user);
+    Optional<Basket> getUserBasket(User user);
 
-    void addProductInBasket(Basket basket, Product product);
+    Basket addProductInBasket(Basket basket, Product product);
 
-    void deleteProductFromBasket(Basket basket, Product product);
+    Basket deleteProductFromBasket(Basket basket, Product product);
 }

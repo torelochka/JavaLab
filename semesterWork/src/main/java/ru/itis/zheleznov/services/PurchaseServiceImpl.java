@@ -6,6 +6,7 @@ import ru.itis.zheleznov.models.Purchase;
 import ru.itis.zheleznov.models.User;
 import ru.itis.zheleznov.repositories.PurchaseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,12 +19,14 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Product> getUserPurchase(User user) {
-        return purchaseRepository.userPurchase(user);
+    public List<Purchase> getUserPurchase(User user) {
+        List<Purchase> purchaseByUserId = purchaseRepository.findPurchaseByCustomer(user);
+        System.out.println(purchaseByUserId);
+        return purchaseByUserId;
     }
 
     @Override
-    public void addPurchase(Purchase purchase) {
+    public void save(Purchase purchase) {
         purchaseRepository.save(purchase);
     }
 

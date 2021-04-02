@@ -7,7 +7,7 @@ import ru.itis.zheleznov.models.User;
 import java.util.List;
 
 public interface PurchaseService {
-    List<Product> getUserPurchase(User user);
+    List<Purchase> getUserPurchase(User user);
 
-    void addPurchase(Purchase purchase);
+    void save(Purchase purchase);
 }

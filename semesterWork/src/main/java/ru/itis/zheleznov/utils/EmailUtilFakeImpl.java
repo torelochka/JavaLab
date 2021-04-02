@@ -2,7 +2,7 @@ package ru.itis.zheleznov.utils;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import ru.itis.zheleznov.models.Email;
+import ru.itis.zheleznov.dto.Email;
 
 @Component
 @Profile("dev")

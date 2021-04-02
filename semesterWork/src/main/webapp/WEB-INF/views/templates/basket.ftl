@@ -19,37 +19,37 @@
             <div class="list-services">
                 <div class="container offset-1">
                     <#if basket??>
-                        <#list basket.getProducts() as product>
+                        <#list basket.products as product>
                             <div class="row history-cont_cards">
                                 <div class="card" style="border-radius: 20px; width: 90%">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <div class="card-body_img" style="padding: 70px 50px">
-                                                    <img src="/views/assets/services/${product.getImage()}"
+                                                    <img src="/views/assets/services/${product.image}"
                                                          alt="product image">
                                                 </div>
                                             </div>
                                             <div class="container offset-2 col-md-6">
                                                 <div class="row">
                                                     <div class="card-body_title">
-                                                        ${product.getName()}
+                                                        ${product.name}
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="card-body_text">
-                                                        ${product.getDescription()}
+                                                        ${product.description}
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="card-body_price">
-                                                        Стоимость: ${product.getPrice()}P
+                                                        Стоимость: ${product.price} P
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="btn_basket" href="/basketService/delete/${product.getId()}">Удалить</a>
+                                    <a class="btn_basket" href="/basketService/delete/${product.id}">Удалить</a>
                                 </div>
                             </div>
                         </#list>

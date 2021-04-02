@@ -20,6 +20,7 @@
             </#if>
             <@spring.bind "signUpForm"/>
             <form class="form-signin" method="post" action="/signUp" autocomplete="off">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <div class="row cards">
                     <div class="card border-white offset-3 col-md-6 card_settings">
                         <div class="card-body text-center ">

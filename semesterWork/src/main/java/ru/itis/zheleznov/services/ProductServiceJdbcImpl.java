@@ -2,7 +2,7 @@ package ru.itis.zheleznov.services;
 
 import org.springframework.stereotype.Service;
 import ru.itis.zheleznov.models.Product;
-import ru.itis.zheleznov.models.SearchRequest;
+import ru.itis.zheleznov.dto.SearchRequest;
 import ru.itis.zheleznov.repositories.ProductRepository;
 
 import java.util.ArrayList;
@@ -31,15 +31,15 @@ public class ProductServiceJdbcImpl implements ProductService {
         if (input != null) {
             if (filter != null) {
                 if (filter.equals("price")) {
-                    productList = productRepository.getProductsByNameOrderByPrice(input);
+                    productList = productRepository.findByNameContainingOrderByPrice(input);
                 } else if (filter.equals("popular")) {
-                    productList = productRepository.getProductsByNameOrderByPopular(input);
+                    productList = productRepository.findByNameContainingOrderByPopularityDesc(input);
                 }
             } else {
-                productList = productRepository.getProductsByName(input);
+                productList = productRepository.findByNameContaining(input);
             }
         } else {
-            productList = allProducts();
+            productList = productRepository.findAll();
         }
 
         return productList;
@@ -47,6 +47,6 @@ public class ProductServiceJdbcImpl implements ProductService {
 
     @Override
     public Product getProductById(long id) {
-        return productRepository.getProductById(id).orElse(null);
+        return productRepository.findById(id).orElse(null);
     }
 }

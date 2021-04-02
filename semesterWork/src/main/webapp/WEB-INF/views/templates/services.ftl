@@ -8,6 +8,7 @@
             </div>
 
             <form class="search_form" method="get" action="/search" id="search_form" autocomplete="off">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <div class="search_block">
                     <div class="container">
                         <div class="row">

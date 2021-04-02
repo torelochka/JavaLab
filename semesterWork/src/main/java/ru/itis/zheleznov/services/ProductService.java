@@ -2,7 +2,7 @@ package ru.itis.zheleznov.services;
 
 import org.springframework.stereotype.Service;
 import ru.itis.zheleznov.models.Product;
-import ru.itis.zheleznov.models.SearchRequest;
+import ru.itis.zheleznov.dto.SearchRequest;
 
 import java.util.List;
 

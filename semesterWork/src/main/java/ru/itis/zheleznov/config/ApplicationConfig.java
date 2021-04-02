@@ -2,17 +2,31 @@ package ru.itis.zheleznov.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -20,6 +34,7 @@ import ru.itis.zheleznov.repositories.*;
 import ru.itis.zheleznov.services.*;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,7 +43,8 @@ import java.util.concurrent.Executors;
 @EnableWebMvc
 @PropertySource("classpath:app.properties")
 @ComponentScan("ru.itis.zheleznov")
-public class ApplicationConfig {
+@EnableJdbcHttpSession
+public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer {
 
     @Autowired
     private Environment environment;
@@ -78,6 +94,20 @@ public class ApplicationConfig {
         return new HikariDataSource(hikariConfig());
     }
 
+    @SneakyThrows
+    @Bean
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        ClassPathResource classPathResource = new ClassPathResource("org/springframework/session/jdbc/schema-postgresql.sql");
+
+        EncodedResource resource = new EncodedResource(classPathResource, "UTF-8");
+        try {
+            ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
+        } catch (ScriptStatementFailedException e) {
+            //empty
+        }
+        return new DataSourceTransactionManager(dataSource);
+    }
+
     @Bean
     public HikariConfig hikariConfig() {
         HikariConfig config = new HikariConfig();
@@ -101,6 +131,7 @@ public class ApplicationConfig {
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
         FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
+        configurer.setDefaultEncoding("UTF-8");
         configurer.setTemplateLoaderPath("WEB-INF/views/templates/");
         return configurer;
     }

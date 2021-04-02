@@ -1,20 +1,15 @@
 package ru.itis.zheleznov.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.itis.zheleznov.models.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository {
-    void update(Product product);
-
-    Optional<Product> getProductById(long id);
-
-    List<Product> findAll();
-
-    List<Product> getProductsByName(String name);
-
-    List<Product> getProductsByNameOrderByPrice(String name);
-
-    List<Product> getProductsByNameOrderByPopular(String name);
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> findByNameContaining(String name);
+    List<Product> findByNameContainingOrderByPrice(String name);
+    List<Product> findByNameContainingOrderByPopularityDesc(String name);
 }

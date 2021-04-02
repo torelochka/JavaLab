@@ -14,24 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import ru.itis.zheleznov.interceptors.CookieInterceptor;
-import ru.itis.zheleznov.interceptors.SecurityInterceptor;
-import ru.itis.zheleznov.services.BasketService;
-import ru.itis.zheleznov.services.UserService;
-
 import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    private final UserService userService;
-    private final BasketService basketService;
-
-    public WebMvcConfig(UserService userService, BasketService basketService) {
-        this.userService = userService;
-        this.basketService = basketService;
-    }
 
     @Override
     public MessageCodesResolver getMessageCodesResolver() {
@@ -59,7 +46,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
+            localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
 
@@ -72,12 +59,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
-    }
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry
+                    .addResourceHandler("/resources/**")
+                    .addResourceLocations("/resources/");
+        }
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -85,9 +72,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/profile", "/basket", "/services", "/basketService", "/purchase");
-        registry.addInterceptor(new CookieInterceptor(userService, basketService));
         registry.addInterceptor(localeChangeInterceptor());
-        //registry.addInterceptor(new CsrfInterceptor()).addPathPatterns("/main", "/signIn", "/signUp");
     }
 }

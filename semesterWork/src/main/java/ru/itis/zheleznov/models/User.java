@@ -5,28 +5,51 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String name;
+    private String firstname;
     private String lastname;
     private String email;
+    @Column(name = "password_hash")
     private String passwordHash;
-    private InputStream profileImg;
+    @Column(name = "confirmed_code")
     private UUID confirmedCode;
-    @Builder.Default
-    private Right rights = Right.USER;
+
     @Builder.Default
     private String image = "/views/assets/user/profile.png";
     @Builder.Default
+    @Enumerated(value = EnumType.STRING)
     private Status status = Status.NOT_CONFIRMED;
+
+    @Builder.Default
+    @Enumerated(value = EnumType.STRING)
+    private State state = State.ACTIVE;
+
+    @Builder.Default
+    @Enumerated(value = EnumType.STRING)
+    private Role role = Role.USER;
+
+    public enum State {
+        ACTIVE, BANNED
+    }
+
+    public enum Role {
+        USER, ADMIN
+    }
 
     public enum Status {
         CONFIRMED("CONFIRMED"),
@@ -41,19 +64,15 @@ public class User {
         }
     }
 
-    public enum Right {
-        ADMIN("ADMIN"),
-        USER("USER"),
-        UNKNOWN("UNKNOWN");
+    public boolean isActive() {
+        return this.state == State.ACTIVE;
+    }
 
-        private final String string;
+    public boolean isBanned() {
+        return this.state == State.BANNED;
+    }
 
-        Right(String rights) {
-            this.string = rights;
-        }
-
-        public String getString() {
-            return string;
-        }
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
     }
 }

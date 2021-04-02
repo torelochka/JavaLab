@@ -147,9 +147,9 @@
                 <div class="row cards">
                     <#list categories as category>
                         <div class="col-md-4 center">
-                            <img src="/views/assets/main/${category.getImage()}" alt="category">
+                            <img src="/views/assets/main/${category.image}" alt="category">
                             <a href="/services">
-                                <div class="text-services">${category.getName()}</div>
+                                <div class="text-services">${category.name}</div>
                             </a>
                         </div>
                     </#list>

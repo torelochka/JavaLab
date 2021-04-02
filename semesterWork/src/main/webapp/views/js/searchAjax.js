@@ -11,6 +11,7 @@ $("#search_form").submit(function (event) {
         data: JSON.stringify(json),
         dataType: "json",
         success: function (data) {
+            console.log(data)
             $('#results').html('');
             data.forEach(function (product) {
                 $('#results').append($(

@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.itis.zheleznov.models.SignInForm;
-import ru.itis.zheleznov.models.SignUpForm;
+import ru.itis.zheleznov.dto.SignUpForm;
 import ru.itis.zheleznov.models.User;
 import ru.itis.zheleznov.services.SignUpService;
 import ru.itis.zheleznov.services.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -52,13 +52,11 @@ public class SignUpController {
             return "signup";
         }
 
-        signUpService.signUp(form, req.getSession());
-        Optional<User> user = userService.getUserByEmail(form.getEmail());
-        if (user.isPresent()) {
-            req.getSession().setAttribute("id", user.get().getId());
-            req.getSession().setAttribute("user", user.get());
+        User user = signUpService.signUp(form);
+        if (user != null) {
+            return "redirect:/signIn";
         }
-        req.getSession().setAttribute("authenticated", true);
-        return "redirect:/profile";
+
+        return "redirect:/signUp";
     }
 }

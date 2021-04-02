@@ -1,4 +1,4 @@
-package ru.itis.zheleznov.models;
+package ru.itis.zheleznov.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,6 @@ import javax.validation.constraints.Email;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Default
 @ValidPasswords(
         message = "{errors.incorrect.passwordsMatch}",
         password = "password",
