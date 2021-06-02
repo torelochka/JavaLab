@@ -3,11 +3,9 @@ package ru.itis.zheleznov.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.SneakyThrows;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -23,9 +21,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
-import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -43,11 +39,16 @@ import java.util.concurrent.Executors;
 @EnableWebMvc
 @PropertySource("classpath:app.properties")
 @ComponentScan("ru.itis.zheleznov")
-@EnableJdbcHttpSession
-public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer {
+@EnableAspectJAutoProxy
+public class ApplicationConfig  {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     @Bean
     public ExecutorService executorService() {
@@ -92,20 +93,6 @@ public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer
     @Bean
     public DataSource dataSource() {
         return new HikariDataSource(hikariConfig());
-    }
-
-    @SneakyThrows
-    @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource) {
-        ClassPathResource classPathResource = new ClassPathResource("org/springframework/session/jdbc/schema-postgresql.sql");
-
-        EncodedResource resource = new EncodedResource(classPathResource, "UTF-8");
-        try {
-            ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
-        } catch (ScriptStatementFailedException e) {
-            //empty
-        }
-        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean

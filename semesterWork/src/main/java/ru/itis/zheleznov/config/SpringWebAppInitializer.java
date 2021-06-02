@@ -37,8 +37,8 @@ public class SpringWebAppInitializer implements WebApplicationInitializer {
         dispatcher.addMapping("/");
 
         CharacterEncodingFilter cef = new CharacterEncodingFilter();
-        cef .setEncoding("UTF-8");
-        cef .setForceEncoding(true);
+        cef.setEncoding("UTF-8");
+        cef.setForceEncoding(true);
         FilterRegistration.Dynamic characterEncoder = servletContext.addFilter("encodingFilter", cef);
         characterEncoder.setInitParameter("encoding", "UTF-8");
         characterEncoder.setInitParameter("forceEncoding", "true");

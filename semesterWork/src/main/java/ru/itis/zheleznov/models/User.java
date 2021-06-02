@@ -56,9 +56,11 @@ public class User implements Serializable {
         NOT_CONFIRMED("NOT_CONFIRMED");
 
         private final String string;
+
         Status(String status) {
             this.string = status;
         }
+
         public String getString() {
             return string;
         }

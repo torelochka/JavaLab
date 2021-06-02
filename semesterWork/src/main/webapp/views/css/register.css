@@ -14,7 +14,7 @@ label {
 }
 
 .error {
-    color:red;
+    color: red;
     font-style: italic;
 }
 
@@ -90,6 +90,6 @@ label {
     color: black;
 }
 
-.card_settings{
+.card_settings {
     border-radius: 20px;
 }

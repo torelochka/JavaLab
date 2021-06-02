@@ -14,6 +14,7 @@ public @interface ValidPasswords {
     String message() default "passwords don't match";
 
     String password();
+
     String passwordAgain();
 
     @Target({ElementType.TYPE})
@@ -23,5 +24,6 @@ public @interface ValidPasswords {
     }
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

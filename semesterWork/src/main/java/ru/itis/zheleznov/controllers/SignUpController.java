@@ -39,7 +39,7 @@ public class SignUpController {
     }
 
     @PostMapping("/signUp")
-    public String register(@Valid SignUpForm form, BindingResult bindingResult, Model model, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public String register(@Valid SignUpForm form, BindingResult bindingResult, Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().anyMatch(error -> {
                 System.out.println(Arrays.toString(error.getCodes()));

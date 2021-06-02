@@ -8,6 +8,7 @@
         h1 {
             color: cadetblue;
         }
+
         h2 {
             color: red;
         }

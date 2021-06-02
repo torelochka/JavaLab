@@ -40,7 +40,7 @@ public class ServicesController {
     public List<String> autocompleteRequest() {
         List<Product> products = productService.allProducts();
         List<String> productsName = new ArrayList<>();
-        for (Product product: products) {
+        for (Product product : products) {
             productsName.add(product.getName());
         }
         return productsName;
